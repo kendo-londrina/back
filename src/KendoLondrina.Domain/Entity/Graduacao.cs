@@ -41,7 +41,7 @@ public class Graduacao : AggregateRoot
         Validate();
     }
 
-    public void Atualizar(
+    public void Update(
         string nome,
         string? descricao = null,
         string? proximaGraduacao = null,

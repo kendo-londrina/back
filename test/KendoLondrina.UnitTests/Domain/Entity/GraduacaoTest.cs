@@ -36,11 +36,11 @@ public class GraduacaoTest
         graduacao.Ativo.Should().BeTrue();
     }
 
-    [Theory(DisplayName = nameof(InstanciarComAtivo))]
+    [Theory(DisplayName = nameof(InstanciarComParametroAtivo))]
     [Trait("Domain", "Category - Aggregates")]
     [InlineData(true)]
     [InlineData(false)]
-    public void InstanciarComAtivo(bool ativo)
+    public void InstanciarComParametroAtivo(bool ativo)
     {
         var graduacaoValida = _graduacaoFixture.ObterGraduacaoValida();
         var datetimeBefore = DateTime.Now;
@@ -111,7 +111,7 @@ public class GraduacaoTest
         { 
             var isOdd = i % 2 == 1;
             yield return new object[] {
-                fixture.ObterGraduacaoNomeValido()[..(isOdd ? 1 : 2)]
+                fixture.ObterNomeValido()[..(isOdd ? 1 : 2)]
             };
         }
     }
@@ -170,84 +170,84 @@ public class GraduacaoTest
         graduacao.Ativo.Should().BeFalse();
     }
 
-    [Fact(DisplayName = nameof(Atualizar))]
+    [Fact(DisplayName = nameof(Alterar))]
     [Trait("Domain", "Category - Aggregates")]
-    public void Atualizar()
+    public void Alterar()
     {
         var umaGraduacao = _graduacaoFixture.ObterGraduacaoValida();
         var outraGraduacao = _graduacaoFixture.ObterGraduacaoValida();
 
-        umaGraduacao.Atualizar(outraGraduacao.Nome, outraGraduacao.Descricao);
+        umaGraduacao.Update(outraGraduacao.Nome, outraGraduacao.Descricao);
 
         umaGraduacao.Nome.Should().Be(outraGraduacao.Nome);
         umaGraduacao.Descricao.Should().Be(outraGraduacao.Descricao);
     }
 
-    [Fact(DisplayName = nameof(UpdateOnlyName))]
+    [Fact(DisplayName = nameof(AlterarApenasNome))]
     [Trait("Domain", "Category - Aggregates")]
-    public void UpdateOnlyName()
+    public void AlterarApenasNome()
     {
         var category = _graduacaoFixture.ObterGraduacaoValida();
-        var newName = _graduacaoFixture.ObterGraduacaoNomeValido();
+        var newName = _graduacaoFixture.ObterNomeValido();
         var currentDescription = category.Descricao;
 
-        category.Atualizar(newName);
+        category.Update(newName);
 
         category.Nome.Should().Be(newName);
         category.Descricao.Should().Be(currentDescription);
     }
 
-    [Theory(DisplayName = nameof(UpdateErrorWhenNameIsEmpty))]
+    [Theory(DisplayName = nameof(ErrorAoAlterarComNomeVazio))]
     [Trait("Domain", "Category - Aggregates")]
     [InlineData("")]
     [InlineData(null)]
     [InlineData("   ")]
-    public void UpdateErrorWhenNameIsEmpty(string? name)
+    public void ErrorAoAlterarComNomeVazio(string? name)
     {
         var category = _graduacaoFixture.ObterGraduacaoValida();
         Action action =
-            () => category.Atualizar(name!);
+            () => category.Update(name!);
         
         action.Should().Throw<EntityValidationException>()
             .WithMessage("Nome should not be empty or null");
     }
 
-    [Theory(DisplayName = nameof(UpdateErrorWhenNameIsLessThan3Characters))]
+    [Theory(DisplayName = nameof(ErroAoAlterarComNomeMenorQue3Caracteres))]
     [Trait("Domain", "Category - Aggregates")]
     [InlineData("1")]
     [InlineData("12")]
     [InlineData("a")]
     [InlineData("ca")]
-    public void UpdateErrorWhenNameIsLessThan3Characters(string invalidName)
+    public void ErroAoAlterarComNomeMenorQue3Caracteres(string invalidName)
     {
         var category = _graduacaoFixture.ObterGraduacaoValida();
 
         Action action =
-            () => category.Atualizar(invalidName);
+            () => category.Update(invalidName);
 
         action.Should()
             .Throw<EntityValidationException>()
             .WithMessage("Nome should be at least 3 characters long");
     }
 
-    [Fact(DisplayName = nameof(UpdateErrorWhenNameIsGreaterThan255Characters))]
+    [Fact(DisplayName = nameof(ErroAoAlterarNomeComMiasQue255Caracteres))]
     [Trait("Domain", "Category - Aggregates")]
-    public void UpdateErrorWhenNameIsGreaterThan255Characters()
+    public void ErroAoAlterarNomeComMiasQue255Caracteres()
     {
         var category = _graduacaoFixture.ObterGraduacaoValida();
         var invalidName = _graduacaoFixture.Faker.Lorem.Letter(256);
 
         Action action =
-            () => category.Atualizar(invalidName);
+            () => category.Update(invalidName);
         
         action.Should()
             .Throw<EntityValidationException>()
             .WithMessage("Nome should be less or equal 255 characters long");
     }
 
-    [Fact(DisplayName = nameof(UpdateErrorWhenDescriptionIsGreaterThan10_000Characters))]
+    [Fact(DisplayName = nameof(ErroAoAlterarComDescricaoMaiorQue10_000Caracteres))]
     [Trait("Domain", "Category - Aggregates")]
-    public void UpdateErrorWhenDescriptionIsGreaterThan10_000Characters()
+    public void ErroAoAlterarComDescricaoMaiorQue10_000Caracteres()
     {
         var category = _graduacaoFixture.ObterGraduacaoValida();
         var invalidDescription = 
@@ -256,7 +256,7 @@ public class GraduacaoTest
             invalidDescription = $"{invalidDescription} {_graduacaoFixture.Faker.Commerce.ProductDescription()}";                            
         
         Action action =
-            () => category.Atualizar("Category New Name", invalidDescription);
+            () => category.Update("Category New Name", invalidDescription);
 
         action.Should()
             .Throw<EntityValidationException>()
