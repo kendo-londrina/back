@@ -4,7 +4,6 @@ using System.Linq;
 using FluentAssertions;
 using KenLo.Domain.Entity;
 using KenLo.Domain.Exceptions;
-using KenLo.UnitTests.Domain.Entity;
 
 namespace KenLo.UnitTests.Domain.Entity;
 
