@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\KendoLondrina.Domain\KendoLondrina.Domain.csproj" />
+    <ProjectReference Include="..\..\src\KendoLondrina.Application\KendoLondrina.Application.csproj" />
   </ItemGroup>
 
 </Project>

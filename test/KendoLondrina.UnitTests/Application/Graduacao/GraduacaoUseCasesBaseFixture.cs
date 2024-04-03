@@ -1,3 +1,4 @@
+using KenLo.Application.Interfaces;
 using KenLo.Domain.Repository;
 using KenLo.UnitTests.Common;
 using Moq;
