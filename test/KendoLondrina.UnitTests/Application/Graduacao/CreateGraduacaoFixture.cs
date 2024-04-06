@@ -16,7 +16,7 @@ public class CreateGraduacaoFixture : GraduacaoUseCasesBaseFixture
             GetRandomBoolean()
         );
 
- public CreateGraduacaoInput GetInvalidInputNomeCurto()
+    public CreateGraduacaoInput GetInvalidInputNomeCurto()
     {
         var invalidInput = GetInput();
         invalidInput.Nome =
