@@ -24,7 +24,7 @@ public class GetGraduacaoTest
     {
         var graduacao = _fixture.ObterGraduacao();
         var repositoryMock = _fixture.GetRepositoryMock();
-        repositoryMock.Setup(x => x.Get(
+        repositoryMock.Setup(x => x.Read(
             It.IsAny<Guid>(),
             It.IsAny<CancellationToken>()
         )).ReturnsAsync(graduacao);
@@ -33,7 +33,7 @@ public class GetGraduacaoTest
 
         var output = await useCase.Handle(input, CancellationToken.None);
 
-        repositoryMock.Verify(x => x.Get(
+        repositoryMock.Verify(x => x.Read(
             It.IsAny<Guid>(),
             It.IsAny<CancellationToken>()
         ), Times.Once);
@@ -51,7 +51,7 @@ public class GetGraduacaoTest
     {
         var exampleGuid = Guid.NewGuid();
         var repositoryMock = _fixture.GetRepositoryMock();
-        repositoryMock.Setup(x => x.Get(
+        repositoryMock.Setup(x => x.Read(
             It.IsAny<Guid>(),
             It.IsAny<CancellationToken>()
         )).ThrowsAsync(
@@ -63,7 +63,7 @@ public class GetGraduacaoTest
         var task = async () => await useCase.Handle(input, CancellationToken.None);
 
         await task.Should().ThrowAsync<NotFoundException>();
-        repositoryMock.Verify(x => x.Get(
+        repositoryMock.Verify(x => x.Read(
             It.IsAny<Guid>(),
             It.IsAny<CancellationToken>()
         ), Times.Once);

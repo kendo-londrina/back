@@ -15,7 +15,7 @@ public class GetGraduacao
         GetGraduacaoInput input,
         CancellationToken cancellationToken)
     {
-        var graduacao = await _graduacaoRepository.Get(input.Id, cancellationToken);
+        var graduacao = await _graduacaoRepository.Read(input.Id, cancellationToken);
         return GraduacaoModelOutput.FromGraduacao(graduacao);
     }
 }

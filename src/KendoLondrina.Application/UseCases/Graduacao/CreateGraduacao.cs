@@ -25,7 +25,7 @@ public class CreateGraduacao
             input.Ativo
         );
 
-        await _graduacaoRepository.Insert(graduacao, cancellationToken);
+        await _graduacaoRepository.Create(graduacao, cancellationToken);
         await _unitOfWork.Commit(cancellationToken);
         
         return GraduacaoModelOutput.FromGraduacao(graduacao);

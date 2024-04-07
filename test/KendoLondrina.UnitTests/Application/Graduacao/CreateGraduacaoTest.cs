@@ -33,7 +33,7 @@ public class CreateGraduacaoTest
         var output = await useCase.Handle(input, CancellationToken.None);
 
         repositoryMock.Verify(
-            repository => repository.Insert(
+            repository => repository.Create(
                 It.IsAny<domain.Graduacao>(),
                 It.IsAny<CancellationToken>()
             ),
@@ -67,7 +67,7 @@ public class CreateGraduacaoTest
         var output = await useCase.Handle(input, CancellationToken.None);
 
         repositoryMock.Verify(
-            repository => repository.Insert(
+            repository => repository.Create(
                 It.IsAny<domain.Graduacao>(),
                 It.IsAny<CancellationToken>()
             ),
@@ -102,7 +102,7 @@ public class CreateGraduacaoTest
         var output = await useCase.Handle(input, CancellationToken.None);
 
         repositoryMock.Verify(
-            repository => repository.Insert(
+            repository => repository.Create(
                 It.IsAny<domain.Graduacao>(),
                 It.IsAny<CancellationToken>()
             ),
