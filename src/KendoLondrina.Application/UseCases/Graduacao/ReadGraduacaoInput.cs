@@ -1,8 +1,8 @@
 namespace KenLo.Application.UseCases.Graduacao;
-public class GetGraduacaoInput
+public class ReadGraduacaoInput
 {
     public Guid Id { get; set; }
-    public GetGraduacaoInput(Guid id)
+    public ReadGraduacaoInput(Guid id)
     {
         Id = id;
     }

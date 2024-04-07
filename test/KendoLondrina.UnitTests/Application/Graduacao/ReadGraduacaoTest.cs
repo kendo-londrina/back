@@ -8,19 +8,19 @@ using Moq;
 
 namespace KenLo.UnitTests.Application.Graduacao;
 
-[Collection(nameof(GetGraduacaoFixture))]
-public class GetGraduacaoTest
+[Collection(nameof(ReadGraduacaoFixture))]
+public class ReadGraduacaoTest
 {
-    private readonly GetGraduacaoFixture _fixture;
+    private readonly ReadGraduacaoFixture _fixture;
 
-    public GetGraduacaoTest(GetGraduacaoFixture fixture)
+    public ReadGraduacaoTest(ReadGraduacaoFixture fixture)
     {
         _fixture = fixture;
     }
 
-    [Fact(DisplayName = nameof(GetGraduacao))]
-    [Trait("Application", "GetGraduacao - Use Cases")]
-    public async Task GetGraduacao()
+    [Fact(DisplayName = nameof(ReadGraduacao))]
+    [Trait("Application", "ReadGraduacao - Use Cases")]
+    public async Task ReadGraduacao()
     {
         var graduacao = _fixture.ObterGraduacao();
         var repositoryMock = _fixture.GetRepositoryMock();
@@ -28,8 +28,8 @@ public class GetGraduacaoTest
             It.IsAny<Guid>(),
             It.IsAny<CancellationToken>()
         )).ReturnsAsync(graduacao);
-        var input = new GetGraduacaoInput(graduacao.Id);
-        var useCase = new GetGraduacao(repositoryMock.Object);
+        var input = new ReadGraduacaoInput(graduacao.Id);
+        var useCase = new ReadGraduacao(repositoryMock.Object);
 
         var output = await useCase.Handle(input, CancellationToken.None);
 
@@ -46,7 +46,7 @@ public class GetGraduacaoTest
     }
 
     [Fact(DisplayName = nameof(NotFoundExceptionWhenGraduacaoDoesntExist))]
-    [Trait("Application", "GetCategory - Use Cases")]
+    [Trait("Application", "ReadGraduacao - Use Cases")]
     public async Task NotFoundExceptionWhenGraduacaoDoesntExist()
     {
         var exampleGuid = Guid.NewGuid();
@@ -57,8 +57,8 @@ public class GetGraduacaoTest
         )).ThrowsAsync(
             new NotFoundException($"Graduacao {exampleGuid} was not found.")
         );
-        var input = new GetGraduacaoInput(exampleGuid);
-        var useCase = new GetGraduacao(repositoryMock.Object);
+        var input = new ReadGraduacaoInput(exampleGuid);
+        var useCase = new ReadGraduacao(repositoryMock.Object);
 
         var task = async () => await useCase.Handle(input, CancellationToken.None);
 
