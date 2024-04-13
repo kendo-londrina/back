@@ -45,9 +45,9 @@ public class ReadGraduacaoTest
         output.CriadoEm.Should().Be(graduacao.CriadoEm);
     }
 
-    [Fact(DisplayName = nameof(NotFoundExceptionWhenGraduacaoDoesntExist))]
+    [Fact(DisplayName = nameof(NotFoundExceptionQuandoGraduacaoNaoExistir))]
     [Trait("Application", "ReadGraduacao - Use Cases")]
-    public async Task NotFoundExceptionWhenGraduacaoDoesntExist()
+    public async Task NotFoundExceptionQuandoGraduacaoNaoExistir()
     {
         var exampleGuid = Guid.NewGuid();
         var repositoryMock = _fixture.GetRepositoryMock();

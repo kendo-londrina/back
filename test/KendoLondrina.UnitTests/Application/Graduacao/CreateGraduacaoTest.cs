@@ -120,14 +120,14 @@ public class CreateGraduacaoTest
         output.CriadoEm.Should().NotBeSameDateAs(default);
     }
 
-    [Theory(DisplayName = nameof(ThrowWhenCantInstantiateCategory))]
+    [Theory(DisplayName = nameof(ExceptionQuandoNaoInstanciarGraduacao))]
     [Trait("Application", "CreateGraduacao - Use Cases")]
     [MemberData(
         nameof(CreateGraduacaoDataGenerator.GetInvalidInputs),
         parameters: 24,
         MemberType = typeof(CreateGraduacaoDataGenerator)
     )]
-    public async void ThrowWhenCantInstantiateCategory(
+    public async void ExceptionQuandoNaoInstanciarGraduacao(
         CreateGraduacaoInput input,
         string exceptionMessage
     )
