@@ -19,7 +19,7 @@ public class GraduacaoTest
     [Trait("Domain", "Graduacao - Aggregates")]
     public void Instanciar()
     {
-        var graducaoValida = _graduacaoFixture.ObterGraduacaoValida();
+        var graducaoValida = _graduacaoFixture.GetGraduacaoValida();
         var datetimeBefore = DateTime.Now;
 
         var graduacao = new Graduacao(graducaoValida.Nome, graducaoValida.Descricao);
@@ -41,7 +41,7 @@ public class GraduacaoTest
     [InlineData(false)]
     public void InstanciarComParametroAtivo(bool ativo)
     {
-        var graduacaoValida = _graduacaoFixture.ObterGraduacaoValida();
+        var graduacaoValida = _graduacaoFixture.GetGraduacaoValida();
         var datetimeBefore = DateTime.Now;
 
         var graduacao = new Graduacao(graduacaoValida.Nome, graduacaoValida.Descricao, ativo);
@@ -57,14 +57,14 @@ public class GraduacaoTest
         (graduacao.Ativo).Should().Be(ativo);
     }
 
-    [Theory(DisplayName = nameof(ErroAoInstanciarComNomeVazio))]
+    [Theory(DisplayName = nameof(EntityValidationExceptionAoInstanciarComNomeVazio))]
     [Trait("Domain", "Category - Aggregates")]
     [InlineData("")]
     [InlineData(null)]
     [InlineData("   ")]
-    public void ErroAoInstanciarComNomeVazio(string? nome)
+    public void EntityValidationExceptionAoInstanciarComNomeVazio(string? nome)
     {
-        var graduacaoValida = _graduacaoFixture.ObterGraduacaoValida();
+        var graduacaoValida = _graduacaoFixture.GetGraduacaoValida();
 
         Action action =
             () => new Graduacao(nome!, graduacaoValida.Descricao);
@@ -74,11 +74,11 @@ public class GraduacaoTest
             .WithMessage("Nome should not be empty or null");
     }
 
-    [Fact(DisplayName = nameof(ErroAoInstanciarComDescricaoNull))]
+    [Fact(DisplayName = nameof(EntityValidationExceptionAoInstanciarComDescricaoNull))]
     [Trait("Domain", "Category - Aggregates")]
-    public void ErroAoInstanciarComDescricaoNull()
+    public void EntityValidationExceptionAoInstanciarComDescricaoNull()
     {
-        var graduacaoValida = _graduacaoFixture.ObterGraduacaoValida();
+        var graduacaoValida = _graduacaoFixture.GetGraduacaoValida();
 
         Action action =
             () => new Graduacao(graduacaoValida.Nome, null!);
@@ -88,12 +88,12 @@ public class GraduacaoTest
             .WithMessage("Descricao should not be null");
     }
 
-    [Theory(DisplayName = nameof(ErroAoInstanciarComNomeMenorQue3Caracteres))]
+    [Theory(DisplayName = nameof(EntityValidationExceptionAoInstanciarComNomeMenorQue3Caracteres))]
     [Trait("Domain", "Category - Aggregates")]
-    [MemberData(nameof(ObterNomesComMenosDe3Caracteres), parameters: 10)]
-    public void ErroAoInstanciarComNomeMenorQue3Caracteres(string nomeInvalido)
+    [MemberData(nameof(GetNomesComMenosDe3Caracteres), parameters: 10)]
+    public void EntityValidationExceptionAoInstanciarComNomeMenorQue3Caracteres(string nomeInvalido)
     {
-        var graduacaoValida = _graduacaoFixture.ObterGraduacaoValida();
+        var graduacaoValida = _graduacaoFixture.GetGraduacaoValida();
 
         Action action =
             () => new Graduacao(nomeInvalido, graduacaoValida.Descricao);
@@ -103,23 +103,23 @@ public class GraduacaoTest
             .WithMessage("Nome should be at least 3 characters long");
     }
 
-    public static IEnumerable<object[]> ObterNomesComMenosDe3Caracteres(int numberOfTests = 6)
+    public static IEnumerable<object[]> GetNomesComMenosDe3Caracteres(int numberOfTests = 6)
     {
         var fixture = new GraduacaoFixture();
         for (int i = 0; i < numberOfTests; i++)
         { 
             var isOdd = i % 2 == 1;
             yield return new object[] {
-                fixture.ObterNomeValido()[..(isOdd ? 1 : 2)]
+                fixture.GetNomeValido()[..(isOdd ? 1 : 2)]
             };
         }
     }
 
-    [Fact(DisplayName = nameof(ErroAoInstanciarComNomeMaiorQue255Caracteres))]
+    [Fact(DisplayName = nameof(EntityValidationExceptionAoInstanciarComNomeMaiorQue255Caracteres))]
     [Trait("Domain", "Category - Aggregates")]
-    public void ErroAoInstanciarComNomeMaiorQue255Caracteres()
+    public void EntityValidationExceptionAoInstanciarComNomeMaiorQue255Caracteres()
     {
-        var graduacaoValida = _graduacaoFixture.ObterGraduacaoValida();
+        var graduacaoValida = _graduacaoFixture.GetGraduacaoValida();
         var nomeInvalido = String.Join(null,Enumerable.Range(1, 256).Select(_ => "a").ToArray());
 
         Action action =
@@ -130,12 +130,12 @@ public class GraduacaoTest
             .WithMessage("Nome should be less or equal 255 characters long");
     }
 
-    [Fact(DisplayName = nameof(ErroAoInstanciarComDescricaoMaiorQue10_000Caracteres))]
+    [Fact(DisplayName = nameof(EntityValidationExceptionAoInstanciarComDescricaoMaiorQue10_000Caracteres))]
     [Trait("Domain", "Category - Aggregates")]
-    public void ErroAoInstanciarComDescricaoMaiorQue10_000Caracteres()
+    public void EntityValidationExceptionAoInstanciarComDescricaoMaiorQue10_000Caracteres()
     {
         var descricaoInvalida = String.Join(null, Enumerable.Range(1, 10_001).Select(_ => "a").ToArray());
-        var graduacaoValida = _graduacaoFixture.ObterGraduacaoValida();
+        var graduacaoValida = _graduacaoFixture.GetGraduacaoValida();
 
         Action action =
             () => new Graduacao(graduacaoValida.Nome, descricaoInvalida);
@@ -149,7 +149,7 @@ public class GraduacaoTest
     [Trait("Domain", "Category - Aggregates")]
     public void Ativar()
     {
-        var graduacaoValida = _graduacaoFixture.ObterGraduacaoValida();
+        var graduacaoValida = _graduacaoFixture.GetGraduacaoValida();
 
         var graduacao = new Graduacao(graduacaoValida.Nome, graduacaoValida.Descricao, false);
         graduacao.Ativar();
@@ -161,7 +161,7 @@ public class GraduacaoTest
     [Trait("Domain", "Category - Aggregates")]
     public void Desativar()
     {
-        var graduacaoValida = _graduacaoFixture.ObterGraduacaoValida();
+        var graduacaoValida = _graduacaoFixture.GetGraduacaoValida();
 
         var graduacao = new Graduacao(graduacaoValida.Nome, graduacaoValida.Descricao, true);
         graduacao.Desativar();
@@ -173,8 +173,8 @@ public class GraduacaoTest
     [Trait("Domain", "Category - Aggregates")]
     public void Alterar()
     {
-        var umaGraduacao = _graduacaoFixture.ObterGraduacaoValida();
-        var outraGraduacao = _graduacaoFixture.ObterGraduacaoValida();
+        var umaGraduacao = _graduacaoFixture.GetGraduacaoValida();
+        var outraGraduacao = _graduacaoFixture.GetGraduacaoValida();
 
         umaGraduacao.Update(outraGraduacao.Nome, outraGraduacao.Descricao);
 
@@ -186,8 +186,8 @@ public class GraduacaoTest
     [Trait("Domain", "Category - Aggregates")]
     public void AlterarApenasNome()
     {
-        var category = _graduacaoFixture.ObterGraduacaoValida();
-        var newName = _graduacaoFixture.ObterNomeValido();
+        var category = _graduacaoFixture.GetGraduacaoValida();
+        var newName = _graduacaoFixture.GetNomeValido();
         var currentDescription = category.Descricao;
 
         category.Update(newName);
@@ -196,14 +196,14 @@ public class GraduacaoTest
         category.Descricao.Should().Be(currentDescription);
     }
 
-    [Theory(DisplayName = nameof(ErrorAoAlterarComNomeVazio))]
+    [Theory(DisplayName = nameof(EntityValidationExceptionAoAlterarComNomeVazio))]
     [Trait("Domain", "Category - Aggregates")]
     [InlineData("")]
     [InlineData(null)]
     [InlineData("   ")]
-    public void ErrorAoAlterarComNomeVazio(string? name)
+    public void EntityValidationExceptionAoAlterarComNomeVazio(string? name)
     {
-        var category = _graduacaoFixture.ObterGraduacaoValida();
+        var category = _graduacaoFixture.GetGraduacaoValida();
         Action action =
             () => category.Update(name!);
         
@@ -211,15 +211,15 @@ public class GraduacaoTest
             .WithMessage("Nome should not be empty or null");
     }
 
-    [Theory(DisplayName = nameof(ErroAoAlterarComNomeMenorQue3Caracteres))]
+    [Theory(DisplayName = nameof(EntityValidationExceptionAoAlterarComNomeMenorQue3Caracteres))]
     [Trait("Domain", "Category - Aggregates")]
     [InlineData("1")]
     [InlineData("12")]
     [InlineData("a")]
     [InlineData("ca")]
-    public void ErroAoAlterarComNomeMenorQue3Caracteres(string invalidName)
+    public void EntityValidationExceptionAoAlterarComNomeMenorQue3Caracteres(string invalidName)
     {
-        var category = _graduacaoFixture.ObterGraduacaoValida();
+        var category = _graduacaoFixture.GetGraduacaoValida();
 
         Action action =
             () => category.Update(invalidName);
@@ -229,11 +229,11 @@ public class GraduacaoTest
             .WithMessage("Nome should be at least 3 characters long");
     }
 
-    [Fact(DisplayName = nameof(ErroAoAlterarNomeComMiasQue255Caracteres))]
+    [Fact(DisplayName = nameof(EntityValidationExceptionAoAlterarNomeComMiasQue255Caracteres))]
     [Trait("Domain", "Category - Aggregates")]
-    public void ErroAoAlterarNomeComMiasQue255Caracteres()
+    public void EntityValidationExceptionAoAlterarNomeComMiasQue255Caracteres()
     {
-        var category = _graduacaoFixture.ObterGraduacaoValida();
+        var category = _graduacaoFixture.GetGraduacaoValida();
         var invalidName = _graduacaoFixture.Faker.Lorem.Letter(256);
 
         Action action =
@@ -244,11 +244,11 @@ public class GraduacaoTest
             .WithMessage("Nome should be less or equal 255 characters long");
     }
 
-    [Fact(DisplayName = nameof(ErroAoAlterarComDescricaoMaiorQue10_000Caracteres))]
+    [Fact(DisplayName = nameof(EntityValidationExceptionAoAlterarComDescricaoMaiorQue10_000Caracteres))]
     [Trait("Domain", "Category - Aggregates")]
-    public void ErroAoAlterarComDescricaoMaiorQue10_000Caracteres()
+    public void EntityValidationExceptionAoAlterarComDescricaoMaiorQue10_000Caracteres()
     {
-        var category = _graduacaoFixture.ObterGraduacaoValida();
+        var category = _graduacaoFixture.GetGraduacaoValida();
         var invalidDescription = 
             _graduacaoFixture.Faker.Commerce.ProductDescription();
         while (invalidDescription.Length <= 10_000)

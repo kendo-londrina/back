@@ -9,7 +9,7 @@ public class GraduacaoFixture : BaseFixture
     public GraduacaoFixture()
         : base() {}
 
-    public string ObterNomeValido()
+    public string GetNomeValido()
     {
         var nome = "";
         while (nome.Length < 3)
@@ -19,7 +19,7 @@ public class GraduacaoFixture : BaseFixture
         return nome;
     }
 
-    public string ObterDescricaoValida()
+    public string GetDescricaoValida()
     {
         var descricao = Faker.Commerce.ProductDescription();
         if (descricao.Length > 10_000)
@@ -27,10 +27,10 @@ public class GraduacaoFixture : BaseFixture
         return descricao;
     }
 
-    public Graduacao ObterGraduacaoValida()
+    public Graduacao GetGraduacaoValida()
         => new(
-            ObterNomeValido(),
-            ObterDescricaoValida(),
+            GetNomeValido(),
+            GetDescricaoValida(),
             true
         );
 }
