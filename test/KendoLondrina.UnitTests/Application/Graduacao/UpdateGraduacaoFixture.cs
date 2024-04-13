@@ -13,8 +13,8 @@ public class UpdateGraduacaoFixture : GraduacaoUseCasesBaseFixture
     public UpdateGraduacaoInput GetInput(Guid? id = null)
     => new(
         id ?? Guid.NewGuid(),
-        ObterNomeValido(),
-        ObterDescricaoValida(),
+        GetNomeValido(),
+        GetDescricaoValida(),
         GetRandomBoolean()
     );
 

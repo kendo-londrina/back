@@ -16,7 +16,7 @@ public abstract class GraduacaoUseCasesBaseFixture
     public Mock<IUnitOfWork> GetUnitOfWorkMock()
         => new();
 
-    public string ObterNomeValido()
+    public string GetNomeValido()
     {
         var nome = "";
         while (nome.Length < 3)
@@ -26,7 +26,7 @@ public abstract class GraduacaoUseCasesBaseFixture
         return nome;
     }
 
-    public string ObterDescricaoValida()
+    public string GetDescricaoValida()
     {
         var descricao = Faker.Commerce.ProductDescription();
         if (descricao.Length > 10_000)
@@ -34,10 +34,10 @@ public abstract class GraduacaoUseCasesBaseFixture
         return descricao;
     }
 
-    public entity.Graduacao ObterGraduacao()
+    public entity.Graduacao GetGraduacao()
         => new(
-            ObterNomeValido(),
-            ObterDescricaoValida(),
+            GetNomeValido(),
+            GetDescricaoValida(),
             GetRandomBoolean()
         );
 }

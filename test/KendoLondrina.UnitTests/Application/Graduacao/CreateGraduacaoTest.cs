@@ -61,7 +61,7 @@ public class CreateGraduacaoTest
             unitOfWorkMock.Object, repositoryMock.Object
         );
         var input = new CreateGraduacaoInput(
-            _fixture.ObterNomeValido()
+            _fixture.GetNomeValido()
         );
 
         var output = await useCase.Handle(input, CancellationToken.None);
@@ -95,8 +95,8 @@ public class CreateGraduacaoTest
             unitOfWorkMock.Object, repositoryMock.Object
         );
         var input = new CreateGraduacaoInput(
-            _fixture.ObterNomeValido(),
-            _fixture.ObterDescricaoValida()
+            _fixture.GetNomeValido(),
+            _fixture.GetDescricaoValida()
         );
 
         var output = await useCase.Handle(input, CancellationToken.None);

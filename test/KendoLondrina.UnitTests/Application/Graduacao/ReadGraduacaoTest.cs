@@ -22,7 +22,7 @@ public class ReadGraduacaoTest
     [Trait("Application", "ReadGraduacao - Use Cases")]
     public async Task ReadGraduacao()
     {
-        var graduacao = _fixture.ObterGraduacao();
+        var graduacao = _fixture.GetGraduacao();
         var repositoryMock = _fixture.GetRepositoryMock();
         repositoryMock.Setup(x => x.Read(
             It.IsAny<Guid>(),

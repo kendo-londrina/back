@@ -9,7 +9,7 @@ public static class UpdateGraduacaoDataGenerator
         var fixture = new UpdateGraduacaoFixture();
         for (int i = 0; i < times; i++)
         {
-            var graduacaoExemplo = fixture.ObterGraduacao();
+            var graduacaoExemplo = fixture.GetGraduacao();
             var input = fixture.GetInput(graduacaoExemplo.Id);
             yield return new object[] {
                 graduacaoExemplo, input

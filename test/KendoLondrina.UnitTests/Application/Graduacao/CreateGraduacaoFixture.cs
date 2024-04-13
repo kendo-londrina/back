@@ -11,8 +11,8 @@ public class CreateGraduacaoFixture : GraduacaoUseCasesBaseFixture
 {
     public CreateGraduacaoInput GetInput()
         => new(
-            ObterNomeValido(),
-            ObterDescricaoValida(),
+            GetNomeValido(),
+            GetDescricaoValida(),
             GetRandomBoolean()
         );
 
