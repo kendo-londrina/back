@@ -120,14 +120,14 @@ public class CreateGraduacaoTest
         output.CriadoEm.Should().NotBeSameDateAs(default);
     }
 
-    [Theory(DisplayName = nameof(ExceptionQuandoNaoInstanciarGraduacao))]
+    [Theory(DisplayName = nameof(EntityValidationExceptionQuandoNaoInstanciarGraduacao))]
     [Trait("Application", "CreateGraduacao - Use Cases")]
     [MemberData(
         nameof(CreateGraduacaoDataGenerator.GetInvalidInputs),
         parameters: 24,
         MemberType = typeof(CreateGraduacaoDataGenerator)
     )]
-    public async void ExceptionQuandoNaoInstanciarGraduacao(
+    public async void EntityValidationExceptionQuandoNaoInstanciarGraduacao(
         CreateGraduacaoInput input,
         string exceptionMessage
     )

@@ -105,9 +105,9 @@ public class UpdateGraduacaoTest
         );
     }
 
-    [Fact(DisplayName = nameof(ExceptionQuandoNaoEncontrarGraduacao))]
+    [Fact(DisplayName = nameof(NotFoundExceptionQuandoNaoEncontrarGraduacao))]
     [Trait("Application", "UpdateCategory - Use Cases")]
-    public async Task ExceptionQuandoNaoEncontrarGraduacao()
+    public async Task NotFoundExceptionQuandoNaoEncontrarGraduacao()
     {
         var input = _fixture.GetInput();
         var repositoryMock = _fixture.GetRepositoryMock();
@@ -129,14 +129,14 @@ public class UpdateGraduacaoTest
         ), Times.Once);
     }
 
-    [Theory(DisplayName = nameof(ExceptionQuandoInputInvalido))]
+    [Theory(DisplayName = nameof(EntityValidationExceptionQuandoInputInvalido))]
     [Trait("Application", "UpdateCategory - Use Cases")]
     [MemberData(
         nameof(UpdateGraduacaoDataGenerator.GetInvalidInputs),
         parameters: 12,
         MemberType = typeof(UpdateGraduacaoDataGenerator)
     )]
-    public async Task ExceptionQuandoInputInvalido(
+    public async Task EntityValidationExceptionQuandoInputInvalido(
         UpdateGraduacaoInput input,
         string expectedExceptionMessage
     )
