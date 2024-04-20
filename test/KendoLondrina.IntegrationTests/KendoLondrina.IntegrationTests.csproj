@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\KendoLondrina.Domain\KendoLondrina.Domain.csproj" />
+    <ProjectReference Include="..\..\src\KendoLondrina.Infra.Data.EF\KendoLondrina.Infra.Data.EF.csproj" />
   </ItemGroup>
 
 </Project>
