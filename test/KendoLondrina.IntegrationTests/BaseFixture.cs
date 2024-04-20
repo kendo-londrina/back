@@ -1,5 +1,6 @@
 using System;
 using Bogus;
+using KenLo.Infra.Data.EF;
 using Microsoft.EntityFrameworkCore;
 
 namespace KenLo.IntegrationTests;

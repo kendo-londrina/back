@@ -4,12 +4,14 @@ using Xunit;
 namespace KenLo.IntegrationTests.Infra.Data.EF.Repositories;
 
 [CollectionDefinition(nameof(GraduacaoRepositoryFixture))]
-class GraduacaoRepositoryFixtureCollection : ICollectionFixture<GraduacaoRepositoryFixture>
-{}
+public class GraduacaoRepositoryFixtureCollection : ICollectionFixture<GraduacaoRepositoryFixture>
+{
+    // esta classe com a Anotation acima serve para que a fixture (classe) possa ser injetada no teste
+}
 
 public class GraduacaoRepositoryFixture : BaseFixture
 {
-      public string GetNomeValido()
+    public string GetNomeValido()
     {
         var nome = "";
         while (nome.Length < 3)

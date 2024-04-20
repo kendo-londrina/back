@@ -1,6 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using KenLo.Infra.Data.EF;
+using KenLo.Infra.Data.EF.Repositories;
 using Xunit;
 
 namespace KenLo.IntegrationTests.Infra.Data.EF.Repositories;
@@ -22,15 +24,15 @@ public class GraduacaoRepositoryTest
         var graduacaoExemplo = _fixture.GetGraduacaoValida();
         var graduacaoRepository = new GraduacaoRepository(dbContext);
 
-        await graduacaoRepository.Insert(graduacaoExemplo, CancellationToken.None);
+        await graduacaoRepository.Create(graduacaoExemplo, CancellationToken.None);
         await dbContext.SaveChangesAsync(CancellationToken.None);
 
         var dbGraduacao = await (_fixture.CreateDbContext(true))
             .Graduacoes.FindAsync(graduacaoExemplo.Id);
         dbGraduacao.Should().NotBeNull();
-        dbGraduacao!.Name.Should().Be(graduacaoExemplo.Nome);
-        dbGraduacao.Description.Should().Be(graduacaoExemplo.Descricao);
-        dbGraduacao.IsActive.Should().Be(graduacaoExemplo.Ativo);
-        dbGraduacao.CreatedAt.Should().Be(graduacaoExemplo.CriadoEm);
+        dbGraduacao!.Nome.Should().Be(graduacaoExemplo.Nome);
+        dbGraduacao.Descricao.Should().Be(graduacaoExemplo.Descricao);
+        dbGraduacao.Ativo.Should().Be(graduacaoExemplo.Ativo);
+        dbGraduacao.CriadoEm.Should().Be(graduacaoExemplo.CriadoEm);
     }
 }
