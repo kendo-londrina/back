@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using KenLo.Domain.Entity;
 using Xunit;
 
@@ -36,4 +38,7 @@ public class GraduacaoRepositoryFixture : BaseFixture
             true
         );
     
+    public List<Graduacao> GetGraduacaoList(int length = 10)
+        => Enumerable.Range(1, length)
+            .Select(_ => GetGraduacaoValida()).ToList();
 }

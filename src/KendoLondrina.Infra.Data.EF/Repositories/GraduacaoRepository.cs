@@ -1,6 +1,7 @@
 using KenLo.Application.Exceptions;
 using KenLo.Domain.Entity;
 using KenLo.Domain.Repository;
+using KenLo.Domain.SeedWork.SearchableRepository;
 using Microsoft.EntityFrameworkCore;
 
 namespace KenLo.Infra.Data.EF.Repositories;
@@ -36,4 +37,8 @@ public class GraduacaoRepository : IGraduacaoRepository
     public async Task<IReadOnlyList<Graduacao>> ListarGraduacoesPorIds(List<Guid> ids, CancellationToken cancellationToken)
         => await _graduacoes.AsNoTracking().Where(x => ids.Contains(x.Id)).ToListAsync();
 
+    public Task<SearchOutput<Graduacao>> List(SearchInput input, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }
