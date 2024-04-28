@@ -14,7 +14,7 @@ public class ListGraduacao
         ListGraduacaoInput input,
         CancellationToken cancellationToken)
     {
-        var searchOutput = await _graduacaoRepository.List(
+        var searchOutput = await _graduacaoRepository.Search(
             new(
                 input.Page, 
                 input.PerPage, 

@@ -1,3 +1,4 @@
+using System.Linq;
 using KenLo.Application.Exceptions;
 using KenLo.Domain.Entity;
 using KenLo.Domain.Repository;
@@ -37,8 +38,40 @@ public class GraduacaoRepository : IGraduacaoRepository
     public async Task<IReadOnlyList<Graduacao>> ListarGraduacoesPorIds(List<Guid> ids, CancellationToken cancellationToken)
         => await _graduacoes.AsNoTracking().Where(x => ids.Contains(x.Id)).ToListAsync();
 
-    public Task<SearchOutput<Graduacao>> List(SearchInput input, CancellationToken cancellationToken)
+    public async Task<SearchOutput<Graduacao>> Search(SearchInput input, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var query = _graduacoes.AsNoTracking();
+        var toSkip = (input.Page - 1) * input.PerPage;
+        query = AddOrderToQuery(query, input.OrderBy, input.Order);
+        if(!String.IsNullOrWhiteSpace(input.Search))
+            query = query.Where(x => x.Nome.Contains(input.Search));        
+
+        var total = await query.CountAsync();
+        var items = await query
+            .Skip(toSkip).Take(input.PerPage)
+            .ToListAsync();
+        return new(input.Page, input.PerPage, total, items);
+    }
+
+    private IQueryable<Graduacao> AddOrderToQuery(
+        IQueryable<Graduacao> query,
+        string orderProperty,
+        SearchOrder order
+    )
+    { 
+        var orderedQuery = (orderProperty.ToLower(), order) switch
+        {
+            ("nome", SearchOrder.Asc) => query.OrderBy(x => x.Nome)
+                .ThenBy(x => x.Id),
+            ("nome", SearchOrder.Desc) => query.OrderByDescending(x => x.Nome)
+                .ThenByDescending(x => x.Id),
+            ("id", SearchOrder.Asc) => query.OrderBy(x => x.Id),
+            ("id", SearchOrder.Desc) => query.OrderByDescending(x => x.Id),
+            ("criadoem", SearchOrder.Asc) => query.OrderBy(x => x.CriadoEm),
+            ("criadoem", SearchOrder.Desc) => query.OrderByDescending(x => x.CriadoEm),
+            _ => query.OrderBy(x => x.Nome)
+                .ThenBy(x => x.Id)
+        };
+        return orderedQuery;
     }
 }

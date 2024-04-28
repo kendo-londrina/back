@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using KenLo.Domain.Entity;
+using KenLo.Domain.SeedWork.SearchableRepository;
 using Xunit;
 
 namespace KenLo.IntegrationTests.Infra.Data.EF.Repositories;
@@ -41,4 +42,34 @@ public class GraduacaoRepositoryFixture : BaseFixture
     public List<Graduacao> GetGraduacaoList(int length = 10)
         => Enumerable.Range(1, length)
             .Select(_ => GetGraduacaoValida()).ToList();
+
+    public List<Graduacao> GetGraduacaoListComNomes(List<string> nomes)
+        => nomes.Select(nome =>
+        {
+            var graduacao = GetGraduacaoValida();
+            graduacao.Update(nome);
+            return graduacao;
+        }).ToList();
+
+    public List<Graduacao> CloneGraduacaoListOrdered(
+        List<Graduacao> graduacaoList,
+        string orderBy,
+        SearchOrder order
+    )
+    {
+        var listClone = new List<Graduacao>(graduacaoList);
+        var orderedEnumerable = (orderBy.ToLower(), order) switch
+        {
+            ("nome", SearchOrder.Asc) => listClone.OrderBy(x => x.Nome)
+                .ThenBy(x => x.Id),
+            ("nome", SearchOrder.Desc) => listClone.OrderByDescending(x => x.Nome)
+                .ThenByDescending(x => x.Id),
+            ("id", SearchOrder.Asc) => listClone.OrderBy(x => x.Id),
+            ("id", SearchOrder.Desc) => listClone.OrderByDescending(x => x.Id),
+            ("criadoem", SearchOrder.Asc) => listClone.OrderBy(x => x.CriadoEm),
+            ("criadoem", SearchOrder.Desc) => listClone.OrderByDescending(x => x.CriadoEm),
+            _ => listClone.OrderBy(x => x.Nome).ThenBy(x => x.Id),
+        };
+        return orderedEnumerable.ToList();
+    }        
 }

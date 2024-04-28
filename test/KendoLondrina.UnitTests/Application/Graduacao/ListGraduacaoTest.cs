@@ -33,7 +33,7 @@ public class ListGraduacaoTest
             items: (IReadOnlyList<entity.Graduacao>) graduacoes,
             total: new Random().Next(50, 200)
         );
-        repositoryMock.Setup(x => x.List(
+        repositoryMock.Setup(x => x.Search(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
@@ -64,7 +64,7 @@ public class ListGraduacaoTest
             outputItem.Ativo.Should().Be(repositoryCategory!.Ativo);
             outputItem.CriadoEm.Should().Be(repositoryCategory!.CriadoEm);
         });
-        repositoryMock.Verify(x => x.List(
+        repositoryMock.Verify(x => x.Search(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
@@ -88,7 +88,7 @@ public class ListGraduacaoTest
             items: new List<entity.Graduacao>(),
             total: 0
         );
-        repositoryMock.Setup(x => x.List(
+        repositoryMock.Setup(x => x.Search(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
@@ -109,7 +109,7 @@ public class ListGraduacaoTest
         output.PerPage.Should().Be(searchOutput.PerPage);
         output.Total.Should().Be(0);
         output.Items.Should().HaveCount(0);
-        repositoryMock.Verify(x => x.List(
+        repositoryMock.Verify(x => x.Search(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
@@ -140,7 +140,7 @@ public class ListGraduacaoTest
             items: (IReadOnlyList<entity.Graduacao>) graduacoes,
             total: new Random().Next(50, 200)
         );
-        repositoryMock.Setup(x => x.List(
+        repositoryMock.Setup(x => x.Search(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
@@ -171,7 +171,7 @@ public class ListGraduacaoTest
             outputItem.Ativo.Should().Be(repositoryCategory!.Ativo);
             outputItem.CriadoEm.Should().Be(repositoryCategory!.CriadoEm);
         });
-        repositoryMock.Verify(x => x.List(
+        repositoryMock.Verify(x => x.Search(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
                 && searchInput.PerPage == input.PerPage
