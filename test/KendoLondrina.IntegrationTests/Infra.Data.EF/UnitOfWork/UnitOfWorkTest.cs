@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +20,12 @@ public class UnitOfWorkTest
     [Fact(DisplayName = nameof(Commit))]
     public async Task Commit()
     {
-        var dbContext = _fixture.CreateDbContext();
+        var dbId = "";
+        // caso o paralelismo dos testes estejam conflitando, crie um
+        // contexto separado passando um id aleatório: dbId = Guid.NewGuid().ToString();
+        // ou configure o paralelismo em test/KendoLondrina.IntegrationTests/xunit.runner.json
+
+        var dbContext = _fixture.CreateDbContext(dbId: dbId);
         var graduacoes = _fixture.GetGraduacaoList();
         await dbContext.AddRangeAsync(graduacoes);
 
@@ -27,7 +33,7 @@ public class UnitOfWorkTest
 
         await unitOfWork.Commit(CancellationToken.None);
 
-        var assertDbContext = _fixture.CreateDbContext(true);
+        var assertDbContext = _fixture.CreateDbContext(true, dbId);
         var savedGraduacoes = assertDbContext.Graduacoes
             .AsNoTracking().ToList();
         savedGraduacoes.Should().HaveCount(graduacoes.Count);

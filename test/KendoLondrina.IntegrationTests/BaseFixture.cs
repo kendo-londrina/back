@@ -15,11 +15,11 @@ public class BaseFixture
     public bool GetRandomBoolean()
         => new Random().NextDouble() < 0.5;
 
-    public KendoLondrinaDbContext CreateDbContext(bool preserveData = false)
+    public KendoLondrinaDbContext CreateDbContext(bool preserveData = false, string dbId = "")
     {
         var context = new KendoLondrinaDbContext(
             new DbContextOptionsBuilder<KendoLondrinaDbContext>()
-            .UseInMemoryDatabase("integration-tests-db")
+            .UseInMemoryDatabase($"integration-tests-db{dbId}")
             .Options
         );
         if (preserveData == false)

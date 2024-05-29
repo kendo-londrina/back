@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\KendoLondrina.Domain\KendoLondrina.Domain.csproj" />
     <ProjectReference Include="..\..\src\KendoLondrina.Infra.Data.EF\KendoLondrina.Infra.Data.EF.csproj" />
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
