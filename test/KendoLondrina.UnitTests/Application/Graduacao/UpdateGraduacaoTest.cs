@@ -90,7 +90,7 @@ public class UpdateGraduacaoTest
         output.Should().NotBeNull();
         output.Nome.Should().Be(input.Nome);
         output.Descricao.Should().Be(graduacaoExemplo.Descricao);
-        output.Ativo.Should().Be((bool)graduacaoExemplo.Ativo!);
+        output.Ativo.Should().Be(graduacaoExemplo.Ativo!);
         repositoryMock.Verify(x => x.Read(
             graduacaoExemplo.Id,
             It.IsAny<CancellationToken>())
