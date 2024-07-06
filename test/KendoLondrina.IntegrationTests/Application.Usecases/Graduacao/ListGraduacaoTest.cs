@@ -33,6 +33,7 @@ public class ListGraduacaoTest
 
         output.Should().NotBeNull();
         output.Items.Should().NotBeNull();
+        output.Page.Should().Be(input.Page);
         output.PerPage.Should().Be(input.PerPage);
         output.Total.Should().Be(0);
         output.Items.Should().HaveCount(0);
@@ -58,6 +59,7 @@ public class ListGraduacaoTest
         // Assert
         output.Should().NotBeNull();
         output.Items.Should().NotBeNull();
+        output.Page.Should().Be(input.Page);
         output.PerPage.Should().Be(input.PerPage);
         output.Total.Should().Be(graduacoes.Count);
         output.Items.Should().HaveCount(graduacoes.Count);
@@ -102,6 +104,7 @@ public class ListGraduacaoTest
         // Assert
         output.Should().NotBeNull();
         output.Items.Should().NotBeNull();
+        output.Page.Should().Be(input.Page);
         output.PerPage.Should().Be(input.PerPage);
         output.Total.Should().Be(quantityToGenerate);
         output.Items.Should().HaveCount(expectedQuantityItems);
@@ -159,6 +162,7 @@ public class ListGraduacaoTest
         // Assert
         output.Should().NotBeNull();
         output.Items.Should().NotBeNull();
+        output.Page.Should().Be(input.Page);
         output.PerPage.Should().Be(input.PerPage);
         output.Total.Should().Be(expectedQuantityTotal);
         output.Items.Should().HaveCount(expectedQuantityItems);
@@ -210,6 +214,7 @@ public class ListGraduacaoTest
         // Assert
         output.Should().NotBeNull();
         output.Items.Should().NotBeNull();
+        output.Page.Should().Be(input.Page);
         output.PerPage.Should().Be(input.PerPage);
         output.Total.Should().Be(graduacoes.Count);
         output.Items.Should().HaveCount(graduacoes.Count);
