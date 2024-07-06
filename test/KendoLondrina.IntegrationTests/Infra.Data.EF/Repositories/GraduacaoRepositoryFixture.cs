@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using KenLo.Domain.Entity;
 using KenLo.Domain.SeedWork.SearchableRepository;
-using Xunit;
 
 namespace KenLo.IntegrationTests.Infra.Data.EF.Repositories;
 

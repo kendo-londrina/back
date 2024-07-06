@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using KenLo.Domain.Entity;
-using Xunit;
 
 namespace KenLo.IntegrationTests.Infra.Data.EF.UnitOfWork;
 

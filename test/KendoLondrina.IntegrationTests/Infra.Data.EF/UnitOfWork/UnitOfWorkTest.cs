@@ -1,10 +1,8 @@
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Xunit;
 using infraEF = KenLo.Infra.Data.EF;
 
 namespace KenLo.IntegrationTests.Infra.Data.EF.UnitOfWork;

@@ -9,7 +9,6 @@ using KenLo.Domain.Entity;
 using KenLo.Domain.SeedWork.SearchableRepository;
 using KenLo.Infra.Data.EF;
 using KenLo.Infra.Data.EF.Repositories;
-using Xunit;
 
 namespace KenLo.IntegrationTests.Infra.Data.EF.Repositories;
 
