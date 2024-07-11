@@ -27,10 +27,13 @@ public class ApiClient
             )
         );
         var responseContent = await response.Content.ReadAsStringAsync();
-        var output = JsonSerializer.Deserialize<TOutput>(
-            responseContent,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-        );
+        TOutput? output = default;
+        if (!string.IsNullOrEmpty(responseContent)) {
+            output = JsonSerializer.Deserialize<TOutput>(
+                responseContent,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+        }
 
         return (response, output);
     }

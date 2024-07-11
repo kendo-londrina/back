@@ -3,7 +3,6 @@ using System.Net.Http;
 using Bogus;
 using KenLo.Infra.Data.EF;
 using Microsoft.EntityFrameworkCore;
-// using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace KenLo.EndToEndTests.Base;
 
