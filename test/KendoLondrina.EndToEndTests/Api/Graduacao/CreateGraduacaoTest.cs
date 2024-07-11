@@ -1,3 +1,4 @@
+using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using KenLo.Application.UseCases.Graduacao;
@@ -19,20 +20,23 @@ public class CreateGraduacaoTest
     {
         var input = _fixture.getExampleInput();
 
-        GraduacaoModelOutput output = await _fixture.Api
-            .Post<GraduacaoModelOutput>(
+        var (response, output) = await _fixture
+            .ApiClient.Post<GraduacaoModelOutput>(
                 "/graduacoes",
                 input
             );
 
+        response.Should().NotBeNull();
+        response!.StatusCode.Should().Be(HttpStatusCode.Created);
+
         output.Should().NotBeNull();
-        output.Nome.Should().Be(input.Nome);
+        output!.Nome.Should().Be(input.Nome);
         output.Descricao.Should().Be(input.Descricao);
         output.Ativo.Should().Be(input.Ativo);
         output.Id.Should().NotBeEmpty();
         output.CriadoEm.Should().NotBeSameDateAs(default);
 
-        var dbGraduacao = await _fixture.CreateDbContext()
+        var dbGraduacao = await Base.BaseFixture.CreateDbContext()
             .Graduacoes.FindAsync(output.Id);
         dbGraduacao.Should().NotBeNull();
         dbGraduacao!.Nome.Should().Be(input.Nome);
