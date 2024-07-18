@@ -1,9 +1,12 @@
 using KenLo.Api.Configurations;
+using KenLo.Api.Filters;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options 
+                => options.Filters.Add(typeof(ApiGlobalExceptionFilter))
+            );
 builder.Services.AddAppConections(builder.Configuration);
 builder.Services.AddUseCases();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
