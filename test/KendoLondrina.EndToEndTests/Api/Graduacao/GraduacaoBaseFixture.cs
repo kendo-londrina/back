@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using KenLo.EndToEndTests.Base;
 using entity = KenLo.Domain.Entity;
 
@@ -5,6 +7,12 @@ namespace KenLo.EndToEndTests.Api.Graduacao;
 
 public class GraduacaoBaseFixture: BaseFixture
 {
+    public GraduacaoPersistence Persistence;
+    public GraduacaoBaseFixture(): base()
+    {
+        Persistence = new GraduacaoPersistence(CreateDbContext());        
+    }
+
     public string GetNomeValido()
     {
         var nome = "";
@@ -47,5 +55,14 @@ public class GraduacaoBaseFixture: BaseFixture
         while (tooLongDescriptionForCategory.Length <= 10_000)
             tooLongDescriptionForCategory = $"{tooLongDescriptionForCategory} {Faker.Commerce.ProductDescription()}";
         return tooLongDescriptionForCategory;
-    }        
+    }
+
+    public List<entity.Graduacao> GetGraduacoes(int listLength = 15)
+        => Enumerable.Range(1, listLength).Select(
+            _ => new entity.Graduacao(
+                GetNomeValido(),
+                GetDescricaoValida(),
+                GetRandomBoolean()
+            )
+        ).ToList();    
 }
