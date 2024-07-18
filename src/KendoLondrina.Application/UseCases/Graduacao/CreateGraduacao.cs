@@ -4,7 +4,15 @@ using domain = KenLo.Domain.Entity;
 
 namespace KenLo.Application.UseCases.Graduacao;
 
-public class CreateGraduacao
+public interface ICreateGraduacao
+{
+    Task<GraduacaoModelOutput> Handle(
+        CreateGraduacaoInput input, 
+        CancellationToken cancellationToken
+    );
+}
+
+public class CreateGraduacao: ICreateGraduacao
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IGraduacaoRepository _graduacaoRepository;
