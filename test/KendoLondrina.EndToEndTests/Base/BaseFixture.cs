@@ -27,7 +27,7 @@ public class BaseFixture
     {
         var context = new KendoLondrinaDbContext(
             new DbContextOptionsBuilder<KendoLondrinaDbContext>()
-            .UseInMemoryDatabase($"end2end-tests-db")
+            .UseInMemoryDatabase("end2end-test-db")
             .Options
         );
         return context;
