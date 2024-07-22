@@ -31,6 +31,7 @@ public static class UseCasesConfiguration
     private static IServiceCollection AddUsecases(this IServiceCollection services)
     {
         services.AddTransient<ICreateGraduacao, CreateGraduacao>();
+        services.AddTransient<IReadGraduacao, ReadGraduacao>();
         return services;
     }
 

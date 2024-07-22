@@ -2,7 +2,16 @@ using domain = KenLo.Domain.Entity;
 using KenLo.Domain.Repository;
 
 namespace KenLo.Application.UseCases.Graduacao;
-public class ReadGraduacao
+
+public interface IReadGraduacao
+{
+    Task<GraduacaoModelOutput> Handle(
+        ReadGraduacaoInput input,
+        CancellationToken cancellationToken
+    );
+}
+
+public class ReadGraduacao: IReadGraduacao
 {
     private readonly IGraduacaoRepository _graduacaoRepository;
 
