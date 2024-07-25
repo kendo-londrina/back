@@ -3,7 +3,16 @@ using KenLo.Domain.Repository;
 using KenLo.Application.Interfaces;
 
 namespace KenLo.Application.UseCases.Graduacao;
-public class DeleteGraduacao
+
+public interface IDeleteGraduacao
+{
+    Task Handle(
+        DeleteGraduacaoInput input, 
+        CancellationToken cancellationToken
+    );
+}
+
+public class DeleteGraduacao: IDeleteGraduacao
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IGraduacaoRepository _graduacaoRepository;
