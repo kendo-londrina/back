@@ -32,6 +32,7 @@ public static class UseCasesConfiguration
     {
         services.AddTransient<ICreateGraduacao, CreateGraduacao>();
         services.AddTransient<IReadGraduacao, ReadGraduacao>();
+        services.AddTransient<IDeleteGraduacao, DeleteGraduacao>();
         return services;
     }
 

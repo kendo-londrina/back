@@ -9,18 +9,21 @@ namespace KendoLondrina.Api.Controllers;
 public class GraduacoesController : ControllerBase
 {
     private readonly ILogger<GraduacoesController> _logger;
-    private readonly IReadGraduacao _readGraduacaoUsecase;
     private readonly ICreateGraduacao _createGraduacaoUsecase;
+    private readonly IReadGraduacao _readGraduacaoUsecase;
+    private readonly IDeleteGraduacao _deleteGraduacaoUsecase;
 
     public GraduacoesController(
         ILogger<GraduacoesController> logger,
+        ICreateGraduacao createGraduacaoUsecase,
         IReadGraduacao readGraduacaoUsecase,
-        ICreateGraduacao createGraduacaoUsecase
+        IDeleteGraduacao deleteGraduacaoUsecase
     )
     {
         _logger = logger;
-        _readGraduacaoUsecase = readGraduacaoUsecase;
         _createGraduacaoUsecase = createGraduacaoUsecase;
+        _readGraduacaoUsecase = readGraduacaoUsecase;
+        _deleteGraduacaoUsecase = deleteGraduacaoUsecase;
     }
 
     [HttpPost]
@@ -48,5 +51,19 @@ public class GraduacoesController : ControllerBase
         var result = await _readGraduacaoUsecase.Handle(input, cancellationToken);
         // return Ok(new ApiResponse<GraduacaoModelOutput>(result));
         return Ok(result);
+    }
+
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    // [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken
+    )
+    {
+        var input = new DeleteGraduacaoInput(id);
+        await _deleteGraduacaoUsecase.Handle(input, cancellationToken);
+        return NoContent();
     }    
+
 }
