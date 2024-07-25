@@ -5,6 +5,7 @@ using FluentAssertions;
 using KenLo.Api.ApiModels.Response;
 using KenLo.Application.UseCases.Graduacao;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KenLo.EndToEndTests.Api.Graduacao;
 
@@ -59,25 +60,25 @@ public class ReadGraduacaoTest
         // );
     }
 
-    // [Fact(DisplayName = nameof(ErrorWhenNotFound))]
-    // [Trait("EndToEnd/API", "Category/Get - Endpoints")]
-    // public async Task ErrorWhenNotFound()
-    // {
-    //     var exampleCategoriesList = _fixture.GetExampleCategoriesList(20);
-    //     await _fixture.Persistence.InsertList(exampleCategoriesList);
-    //     var randomGuid = Guid.NewGuid();
+    [Fact(DisplayName = nameof(ErrorWhenNotFound))]
+    [Trait("EndToEnd/API", "Category/Get - Endpoints")]
+    public async Task ErrorWhenNotFound()
+    {
+        var graduacoes = _fixture.GetGraduacoes(20);
+        await _fixture.Persistence.InsertList(graduacoes);
+        var randomGuid = Guid.NewGuid();
 
-    //     var (response, output) = await _fixture.ApiClient.Get<ProblemDetails>(
-    //         $"/categories/{randomGuid}"
-    //     );
+        var (response, output) = await _fixture.ApiClient.Get<ProblemDetails>(
+            $"/graduacoes/{randomGuid}"
+        );
 
-    //     response.Should().NotBeNull();
-    //     response!.StatusCode.Should().Be((HttpStatusCode)StatusCodes.Status404NotFound);
-    //     output.Should().NotBeNull();
-    //     output!.Status.Should().Be((int)StatusCodes.Status404NotFound);
-    //     output.Type.Should().Be("NotFound");
-    //     output.Title.Should().Be("Not Found");
-    //     output.Detail.Should().Be($"Category '{randomGuid}' not found.");
-    // }
+        response.Should().NotBeNull();
+        response!.StatusCode.Should().Be((HttpStatusCode)StatusCodes.Status404NotFound);
+        output.Should().NotBeNull();
+        output!.Status.Should().Be((int)StatusCodes.Status404NotFound);
+        output.Type.Should().Be("NotFound");
+        output.Title.Should().Be("Not Found");
+        output.Detail.Should().Be($"Graduacao {randomGuid} not found");
+    }
 
 }
