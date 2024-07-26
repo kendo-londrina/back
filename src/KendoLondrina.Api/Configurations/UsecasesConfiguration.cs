@@ -30,10 +30,10 @@ public static class UseCasesConfiguration
 
     private static IServiceCollection AddUsecases(this IServiceCollection services)
     {
-        services.AddTransient<ICreateGraduacao, CreateGraduacao>();
-        services.AddTransient<IReadGraduacao, ReadGraduacao>();
-        services.AddTransient<IDeleteGraduacao, DeleteGraduacao>();
-        services.AddTransient<IUpdateGraduacao, UpdateGraduacao>();
+        services.AddScoped<ICreateGraduacao, CreateGraduacao>();
+        services.AddScoped<IReadGraduacao, ReadGraduacao>();
+        services.AddScoped<IDeleteGraduacao, DeleteGraduacao>();
+        services.AddScoped<IUpdateGraduacao, UpdateGraduacao>();
         return services;
     }
 
